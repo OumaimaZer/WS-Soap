@@ -1,7 +1,7 @@
-# Rapport Partie 1 de "Comment Implémenter Déployer Tester Consommer un Web service SOAP WSDL avec JAXWS" par Monsieur Mohamed Youssfi
+# Rapport sur "Comment Implémenter Déployer Tester Consommer un Web service SOAP WSDL avec JAXWS" par Monsieur Mohamed Youssfi
 
 ## Introduction
-La vidéo présente un projet de développement d'un service web basé sur SOAP (Simple Object Access Protocol) . Le projet est structuré autour d'une application bancaire simple, qui expose des opérations telles que la conversion de devises et la gestion de comptes bancaires. L'objectif principal est de créer un service web SOAP utilisant Java et de tester ce service à l'aide de SoapUI , une outil populaire pour tester les services web.
+La vidéo présente un projet de développement d'un service web basé sur SOAP (Simple Object Access Protocol) . Le projet est structuré autour d'une application bancaire simple, qui expose des opérations telles que la conversion de devises et la gestion de comptes bancaires. L'objectif principal est de créer un service web SOAP utilisant Java et de tester ce service à l'aide de SoapUI , une outil populaire pour tester les services web. Puis nous allons utiliser les classes générées à partir du fichier WSDL.
   - Lien : https://www.youtube.com/watch?v=WZi3s2bZNAE
 
 ## Structure du projet :
@@ -25,6 +25,15 @@ Le projet est organisé dans un répertoire standard Maven :
       * listComptes() : Méthode retournant une liste de comptes générés aléatoirement.
   - Compte.java : Cette classe représente un compte bancaire. Elle contient des attributs tels que le code du compte, le solde et la date de création.
       * Constructeurs et Getters/Setters : Permettent de manipuler les propriétés du compte.
+### 3. Module client-soap-java
+  - Module Maven : client-soap-java
+  - Package principal : net.zerhouani.clientsoapjava
+  - Classes principales :
+      * Main.java : Point d'entrée du programme client.
+      * Classes proxy générées automatiquement via "Generate Java from WSDL" :
+          * BanqueService.java
+          * BanqueWS.java
+          * Compte.java
         
   ## Étapes de Développement
   ### 1. Création du Service Web :
@@ -40,6 +49,14 @@ Le projet est organisé dans un répertoire standard Maven :
     * Appel de la méthode conversion pour vérifier la conversion de devises.
     * Appel de la méthode getCompte pour récupérer un compte spécifique.
     * Appel de la méthode listComptes pour obtenir une liste de comptes.
+  ### 4. Génération des Classes Proxy depuis le WSDL et leur implémentation 
+  - Utilisation de l’outil "Generate Java from WSDL" (souvent intégré dans Eclipse ou via wsimport) pour générer les classes nécessaires à la consommation du service web. Cet outil génère :
+      * Des interfaces et classes permettant d'appeler les méthodes du service.
+      * Des classes Java représentant les objets échangés (ex: Compte).
+      * Un stub client (BanqueService) et une classe de démarrage (BanqueWS).
+  - conversionEuroToDH(double mt) : Convertit un montant en euros vers des dirhams marocains (facteur ×11).
+  - getCompte(int code) : Récupère les informations d’un compte bancaire à partir de son code.
+  - listComptes() : Retourne une liste de comptes générée aléatoirement côté serveur.  
 
 
 ## Résultats :
@@ -53,6 +70,10 @@ Le projet est organisé dans un répertoire standard Maven :
 ![image](https://github.com/user-attachments/assets/50e1932c-69bc-47a4-be55-9bded1a3ee19)
 ![image](https://github.com/user-attachments/assets/c60f1c06-0c63-4890-898f-e3acacc65e3b)
 
+### Client-Soap-java :
+![image](https://github.com/user-attachments/assets/a293d6f9-322c-4bb5-b991-6f32c7de125a)
+
+
 
 ## Conclusion
 La vidéo présente un projet complet de développement d'un service web SOAP en Java. Le projet comprend :
@@ -61,4 +82,7 @@ La vidéo présente un projet complet de développement d'un service web SOAP en
   - Une classe Compte modélisant un compte bancaire.
   - Des tests effectués avec SoapUI pour valider le fonctionnement des opérations du service web.
 Ce projet illustre clairement les étapes nécessaires pour créer et tester un service web SOAP, en mettant l'accent sur la simplicité et la praticité.
+La mise en place du module client SOAP vient compléter efficacement le projet initial. Grâce à l’utilisation du WSDL, le client peut facilement interagir avec le serveur sans avoir à reproduire la logique métier. Ce modèle illustre bien l’architecture client-serveur orientée services web .
+
+Ce type d’approche est couramment utilisé dans les applications distribuées, notamment dans les systèmes bancaires, les API métiers ou encore les architectures SOA (Service-Oriented Architecture).
 
